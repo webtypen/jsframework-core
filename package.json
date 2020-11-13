@@ -1,22 +1,29 @@
 {
+    "name": "webtypen-jsframework",
+    "description": "A js framework by webtypen.de",
+    "version": "1.0.02",
+    "homepage": "https://js-framework.webtypen.de/",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/webtypen/jsframework.git"
+    },
+    "bugs": {
+        "url": "https://github.com/webtypen/jsframework/issues"
+    },
     "author": {
         "name": "Benedict Romp",
         "email": "b.romp@webtypen.de",
         "url": "https://webtypen.de/"
     },
-    "bugs": {
-        "url": "https://github.com/webtypen/jsframework/issues"
+    "dependencies": {
+        "express": "^4.17.1",
+        "lodash": "^4.17.20",
+        "mysql": "^2.18.1",
+        "nodemon": "^2.0.6",
+        "symfony-style-console": "^1.0.0"
     },
-    "bundleDependencies": false,
-    "deprecated": false,
-    "description": "A js framework by webtypen.de",
-    "homepage": "https://js-framework.webtypen.de/",
-    "license": "MIT",
     "main": "index.js",
-    "name": "webtypen-jsframework",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/webtypen/jsframework.git"
-    },
-    "version": "1.0.01"
+    "bundleDependencies": false,
+    "deprecated": false
 }
