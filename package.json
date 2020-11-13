@@ -1,49 +1,22 @@
 {
-  "_from": "webtypen-jsframework",
-  "_id": "webtypen-jsframework@1.0.0",
-  "_inBundle": false,
-  "_integrity": "sha512-4CbiEOvIMSEwF0Pk4m4FHAaPYKYKmD5JBqmyFQuyI6TnXZxSBPQrDrCfVYqrWaB8DN8+wjvDN4xk9sO2xt/rUg==",
-  "_location": "/webtypen-jsframework",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "webtypen-jsframework",
+    "author": {
+        "name": "Benedict Romp",
+        "email": "b.romp@webtypen.de",
+        "url": "https://webtypen.de/"
+    },
+    "bugs": {
+        "url": "https://github.com/webtypen/jsframework/issues"
+    },
+    "bundleDependencies": false,
+    "deprecated": false,
+    "description": "A js framework by webtypen.de",
+    "homepage": "https://js-framework.webtypen.de/",
+    "license": "MIT",
+    "main": "index.js",
     "name": "webtypen-jsframework",
-    "escapedName": "webtypen-jsframework",
-    "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/webtypen-jsframework/-/webtypen-jsframework-1.0.0.tgz",
-  "_shasum": "d5ea3791c5f9b7d3aa93c7a4bd0e4c104bc74a99",
-  "_spec": "webtypen-jsframework",
-  "_where": "/webdev/jsframework",
-  "author": {
-    "name": "Benedict Romp",
-    "email": "b.romp@webtypen.de",
-    "url": "https://webtypen.de/"
-  },
-  "bugs": {
-    "url": "https://github.com/webtypen/jsframework/issues"
-  },
-  "bundleDependencies": false,
-  "deprecated": false,
-  "description": "A js framework by webtypen.de",
-  "homepage": "https://js-framework.webtypen.de/",
-  "license": "MIT",
-  "main": "index.js",
-  "name": "webtypen-jsframework",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/webtypen/jsframework.git"
-  },
-  "scripts": {
-    "test": "echo \"This package has no configures tests yet ...\" && exit 1"
-  },
-  "version": "1.0.0"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/webtypen/jsframework.git"
+    },
+    "version": "1.0.01"
 }
