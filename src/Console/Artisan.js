@@ -5,6 +5,11 @@ const OverviewCommand = require("./Commands/OverviewCommand");
 const MigrateCommand = require("./Commands/MigrateCommand");
 const VersionCommand = require("./Commands/VersionCommand");
 const PresetReactCommand = require("./Commands/PresetReactCommand");
+const UsersCreateCommand = require("./Commands/UsersCreateCommand");
+const UsersActivate = require("./Commands/UsersActivate");
+const UsersDeactivate = require("./Commands/UsersDeactivate");
+const UsersAddRole = require("./Commands/UsersAddRole");
+const UsersRemoveRole = require("./Commands/UsersRemoveRole");
 const Application = require("../Application");
 
 // Load env-Variables
@@ -20,6 +25,11 @@ const argv = process.argv.slice(2);
 ConsoleRegistry.register(VersionCommand);
 ConsoleRegistry.register(MigrateCommand);
 ConsoleRegistry.register(PresetReactCommand);
+ConsoleRegistry.register(UsersCreateCommand);
+ConsoleRegistry.register(UsersActivate);
+ConsoleRegistry.register(UsersDeactivate);
+ConsoleRegistry.register(UsersAddRole);
+ConsoleRegistry.register(UsersRemoveRole);
 
 if (!argv || !argv[0] || argv[0].trim() === "" || argv[0].trim().substring(0, 1) === "-") {
     const command = new OverviewCommand(argv);

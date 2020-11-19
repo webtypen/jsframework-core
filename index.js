@@ -5,4 +5,5 @@ exports.ConsoleRegistry = require("./src/Console/ConsoleRegistry");
 exports.Model = require("./src/Database/Model");
 exports.Migration = require("./src/Database/Migration");
 exports.DatabaseConnections = require("./src/Database/Connections");
+exports.QueryBuilder = require("./src/Database/QueryBuilder");
 exports.Config = require("./src/Config");

@@ -1,16 +1,29 @@
+const QueryBuilder = require("./QueryBuilder");
 const Connections = require("./Connections");
 
 class Model {
     connection = null; // Default connection
     table = null;
     keyColumn = "id";
+    frameworkIgnored = ["hidden", "casts", "frameworkIgnored", "connection", "table", "keyColumn"];
+    hidden = [];
+    casts = {
+        created_at: "datetime",
+        updated_at: "datetime",
+    };
 
     static find(id) {
         // @ToDo
     }
 
     static where(column, operator, value) {
-        // Query-Builder zurückgeben
+        const model = new this();
+        const builder = new QueryBuilder(model.connection);
+        builder.setModelMapping(model);
+        builder.table(model.table);
+        builder.where(column, operator, value);
+
+        return builder;
     }
 
     getConnection() {
@@ -22,30 +35,39 @@ class Model {
     }
 
     save() {
-        const ignoredFields = ["connection", "table", "keyColumn"];
-
         const values = {};
         for (let i in this) {
-            if (!ignoredFields.includes(i)) {
+            if (!this.frameworkIgnored.includes(i)) {
                 values[i] = this[i];
             }
         }
 
         if (this[this.keyColumn] && this[this.keyColumn] !== null && this[this.keyColumn].toString().trim() !== "") {
-            this.update(this[this.keyColumn], values);
+            return this.update(this[this.keyColumn], values);
         } else {
-            this.insert(values);
+            return this.insert(values);
         }
     }
 
+    toArray(withHiddenFields) {
+        const values = {};
+        for (let i in this) {
+            if (withHiddenFields || (!this.frameworkIgnored.includes(i) && !this.hidden.includes(i))) {
+                values[i] = this[i];
+            }
+        }
+
+        return values;
+    }
+
     update(id, mappings) {
-        console.log("update");
+        const connection = this.getConnection();
+        return connection.update(id, this.keyColumn, this.table, mappings);
     }
 
     insert(mappings) {
-        console.log("");
         const connection = this.getConnection();
-        connection.insert(this.table, mappings);
+        return connection.insert(this.table, mappings);
     }
 
     delete() {}

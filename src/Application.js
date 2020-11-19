@@ -1,4 +1,5 @@
-var express = require("express");
+const express = require("express");
+const fileupload = require("express-fileupload");
 const Connections = require("./Database/Connections");
 const Config = require("./Config");
 var app = express();
@@ -12,6 +13,20 @@ exports.boot = () => {
 
     // Load config
     Config.load();
+
+    // Auth laden
+    require("./Auth/AuthInit")(app);
+
+    // Middleware
+    app.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "*");
+        res.header("Access-Control-Allow-Headers", "*");
+        res.header("x-powered-by", "serverless-express");
+        next();
+    });
+    app.use(fileupload());
+    app.use(express.json());
 
     // Load routes
     require("../../../routes");

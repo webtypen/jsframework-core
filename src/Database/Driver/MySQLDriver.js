@@ -102,21 +102,16 @@ class MySQLDriver extends BaseDriver {
         }
     }
 
-    async rawQuery(statement) {
+    async query(statement) {
         const query = util.promisify(this.connection.query).bind(this.connection);
 
         try {
-            const rows = await query(statement);
-            return rows;
+            return await query(statement);
         } catch (error) {
             console.error(error);
         }
 
         return null;
-    }
-
-    async query(statement) {
-        return await this.rawQuery(statement);
     }
 
     async tableExists(tableName) {
@@ -167,17 +162,76 @@ class MySQLDriver extends BaseDriver {
                 mappings.updated_at = moment().format("YYYY-MM-DD hh:mm:ss");
             }
         }
-        console.log(this.tableCache);
 
         let statement =
             "INSERT INTO `" +
             tableName +
             "` SET " +
             Object.keys(mappings).map((key) => {
-                return "`" + key + "` = " + mysql.escape(mappings[key]) + "";
+                return "`" + key + "` = " + mysql.escape(this.handleInsertValue(mappings[key]));
             });
-        const data = await this.query(statement);
-        console.log(data);
+        await this.query(statement);
+        return true;
+    }
+
+    async update(id, keyColumn, tableName, mappings) {
+        if (!this.tableCache[tableName] || !this.tableCache[tableName].updated_at) {
+            if (!this.tableCache[tableName]) {
+                this.tableCache[tableName] = {};
+            }
+            this.tableCache[tableName]["updated_at"] = await this.columnExists(tableName, "updated_at");
+        }
+
+        if (this.tableCache[tableName]["updated_at"]) {
+            mappings.updated_at = moment().format("YYYY-MM-DD hh:mm:ss");
+        }
+
+        let statement =
+            "UPDATE `" +
+            tableName +
+            "` SET " +
+            Object.keys(mappings).map((key) => {
+                return "`" + key + "` = " + mysql.escape(this.handleInsertValue(mappings[key]));
+            }) +
+            " WHERE `" +
+            keyColumn +
+            "` = " +
+            mysql.escape(id);
+        await this.query(statement);
+        return true;
+    }
+
+    handleInsertValue(value) {
+        if (typeof value === "object" && value instanceof moment) {
+            value = value.format("YYYY-MM-DD hh:mm:ss");
+        } else if (typeof value === "object") {
+            value = JSON.stringify(value);
+        }
+        return value;
+    }
+
+    async queryBuilder(type, queryData) {
+        let query = "SELECT " + (queryData.select ? "" : "*") + " FROM " + queryData.table;
+        if (queryData.filter && queryData.filter.length > 0) {
+            query += " WHERE ";
+
+            for (let i in queryData.filter) {
+                query +=
+                    (i > 0 ? " AND " : "") +
+                    "`" +
+                    queryData.filter[i].column +
+                    "` " +
+                    queryData.filter[i].operator +
+                    " " +
+                    mysql.escape(queryData.filter[i].value);
+            }
+        }
+
+        const data = await this.query(query);
+        if (type === "first") {
+            return data && data.length > 0 && data[0] ? data[0] : null;
+        }
+        return data && data.length > 0 ? data : null;
     }
 }
 

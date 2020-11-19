@@ -12,10 +12,12 @@ class BaseDriver {
     createTable(tableName, migrationName) {}
     query(statement) {}
     tableExists(tableName) {}
+    columnExists(tableName) {}
     insert() {}
     update() {}
     delete() {}
-
+    queryBuilder() {}
+    
     getConnection() {
         return this.connection;
     }

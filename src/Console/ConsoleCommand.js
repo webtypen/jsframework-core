@@ -20,11 +20,23 @@ class ConsoleCommand {
     }
 
     writeln(line) {
-        this.output.writeln(line);
+        return this.output.writeln(line);
     }
 
     write(line) {
-        this.output.write(line);
+        return this.output.write(line);
+    }
+
+    success(line) {
+        return this.output.success(line);
+    }
+
+    ask(question) {
+        return this.output.ask(question);
+    }
+
+    askHidden(question) {
+        return this.output.askHidden(question);
     }
 }
 
