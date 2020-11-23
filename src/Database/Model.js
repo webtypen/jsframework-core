@@ -5,7 +5,18 @@ class Model {
     connection = null; // Default connection
     table = null;
     keyColumn = "id";
-    frameworkIgnored = ["hidden", "casts", "frameworkIgnored", "connection", "table", "keyColumn"];
+    sortKey = null;
+    sortKeyColumn = null;
+    frameworkIgnored = [
+        "hidden",
+        "casts",
+        "frameworkIgnored",
+        "connection",
+        "table",
+        "keyColumn",
+        "sortKey",
+        "sortKeyColumn",
+    ];
     hidden = [];
     casts = {
         created_at: "datetime",
@@ -19,6 +30,10 @@ class Model {
         builder.table(model.table);
         builder.where(model.keyColumn, "=", id);
 
+        if (model.sortKey && model.sortKeyColumn) {
+            builder.where(model.sortKeyColumn, "=", model.sortKey);
+        }
+
         return builder.first();
     }
 
@@ -27,6 +42,11 @@ class Model {
         const builder = new QueryBuilder(model.connection);
         builder.setModelMapping(model);
         builder.table(model.table);
+
+        if (model.sortKey && model.sortKeyColumn) {
+            builder.where(model.sortKeyColumn, "=", model.sortKey);
+        }
+
         builder.where(column, operator, value);
 
         return builder;
@@ -34,6 +54,19 @@ class Model {
 
     async getConnection() {
         return await Connections.getConnection(this.connection);
+    }
+
+    static async get() {
+        const model = new this();
+        const builder = new QueryBuilder(model.connection);
+        builder.setModelMapping(model);
+        builder.table(model.table);
+
+        if (model.sortKey && model.sortKeyColumn) {
+            builder.where(model.sortKeyColumn, "=", model.sortKey);
+        }
+
+        return await builder.get();
     }
 
     delete() {

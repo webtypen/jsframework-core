@@ -65,9 +65,23 @@ class DynamoDBDriver extends BaseDriver {
 
     async columnExists(tableName, columnName) {}
 
-    async insert(tableName, mappings) {}
+    async insert(tableName, mappings) {
+        const params = {
+            TableName: tableName,
+            Item: mappings,
+        };
+        await this.dynamodb.put(params).promise();
+        return true;
+    }
 
-    async update(id, keyColumn, tableName, mappings) {}
+    async update(id, keyColumn, tableName, mappings) {
+        const params = {
+            TableName: tableName,
+            Item: mappings,
+        };
+        await this.dynamodb.put(params).promise();
+        return true;
+    }
 
     handleInsertValue(value) {
         if (typeof value === "object" && value instanceof moment) {
@@ -92,12 +106,18 @@ class DynamoDBDriver extends BaseDriver {
             vals++;
         }
 
-        const params = {
+        let params = {
             TableName: queryData.table,
-            FilterExpression: filter,
-            ExpressionAttributeNames: attributes,
-            ExpressionAttributeValues: attributesValues,
         };
+
+        if (filter && filter.trim() !== "") {
+            params.FilterExpression = filter;
+        }
+
+        if (vals > 0) {
+            params.ExpressionAttributeNames = attributes;
+            params.ExpressionAttributeValues = attributesValues;
+        }
 
         let data = null;
         try {

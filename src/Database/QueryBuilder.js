@@ -45,7 +45,7 @@ class QueryBuilder {
     }
 
     async get() {
-        const connection = Connections.getConnection(this.connection);
+        const connection = await Connections.getConnection(this.connection);
         const data = await connection.queryBuilder("get", this.queryData);
         if (!this.modelMapping) {
             return data;
