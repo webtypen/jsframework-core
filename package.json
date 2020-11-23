@@ -1,6 +1,6 @@
 {
     "_from": "webtypen-jsframework@^1.0.0",
-    "_id": "webtypen-jsframework@1.0.3",
+    "_id": "webtypen-jsframework@1.0.5",
     "_inBundle": false,
     "_integrity": "sha512-ZUN7Wjmbgh4+annEy+EUQaDHd1OTrVgkqkZbRS877MGljRQlI7JC4JaEzExq3xjGUqkzjrCvzhF8ZnHob1AiUw==",
     "_location": "/webtypen-jsframework",
@@ -56,5 +56,5 @@
         "type": "git",
         "url": "git+https://github.com/webtypen/jsframework.git"
     },
-    "version": "1.0.4"
+    "version": "1.0.5"
 }
