@@ -1,60 +1,60 @@
 {
-  "_from": "webtypen-jsframework@^1.0.0",
-  "_id": "webtypen-jsframework@1.0.3",
-  "_inBundle": false,
-  "_integrity": "sha512-ZUN7Wjmbgh4+annEy+EUQaDHd1OTrVgkqkZbRS877MGljRQlI7JC4JaEzExq3xjGUqkzjrCvzhF8ZnHob1AiUw==",
-  "_location": "/webtypen-jsframework",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "range",
-    "registry": true,
-    "raw": "webtypen-jsframework@^1.0.0",
+    "_from": "webtypen-jsframework@^1.0.0",
+    "_id": "webtypen-jsframework@1.0.3",
+    "_inBundle": false,
+    "_integrity": "sha512-ZUN7Wjmbgh4+annEy+EUQaDHd1OTrVgkqkZbRS877MGljRQlI7JC4JaEzExq3xjGUqkzjrCvzhF8ZnHob1AiUw==",
+    "_location": "/webtypen-jsframework",
+    "_phantomChildren": {},
+    "_requested": {
+        "type": "range",
+        "registry": true,
+        "raw": "webtypen-jsframework@^1.0.0",
+        "name": "webtypen-jsframework",
+        "escapedName": "webtypen-jsframework",
+        "rawSpec": "^1.0.0",
+        "saveSpec": null,
+        "fetchSpec": "^1.0.0"
+    },
+    "_requiredBy": [
+        "/"
+    ],
+    "_resolved": "https://registry.npmjs.org/webtypen-jsframework/-/webtypen-jsframework-1.0.3.tgz",
+    "_shasum": "79f7ee232d0718144b40aa5fa3808bfb0216012d",
+    "_spec": "webtypen-jsframework@^1.0.0",
+    "_where": "/webdev/serverless/api",
+    "author": {
+        "name": "Benedict Romp",
+        "email": "b.romp@webtypen.de",
+        "url": "https://webtypen.de/"
+    },
+    "bugs": {
+        "url": "https://github.com/webtypen/jsframework/issues"
+    },
+    "bundleDependencies": false,
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "express-fileupload": "^1.2.0",
+        "glob": "^7.1.6",
+        "jsonwebtoken": "^8.5.1",
+        "lodash": "^4.17.20",
+        "moment": "^2.29.1",
+        "mysql": "^2.18.1",
+        "nodemon": "^2.0.6",
+        "passport": "^0.4.1",
+        "passport-jwt": "^4.0.0",
+        "symfony-style-console": "^1.0.0"
+    },
+    "deprecated": false,
+    "description": "A js framework by webtypen.de",
+    "homepage": "https://js-framework.webtypen.de/",
+    "license": "MIT",
+    "main": "index.js",
     "name": "webtypen-jsframework",
-    "escapedName": "webtypen-jsframework",
-    "rawSpec": "^1.0.0",
-    "saveSpec": null,
-    "fetchSpec": "^1.0.0"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/webtypen-jsframework/-/webtypen-jsframework-1.0.3.tgz",
-  "_shasum": "79f7ee232d0718144b40aa5fa3808bfb0216012d",
-  "_spec": "webtypen-jsframework@^1.0.0",
-  "_where": "/webdev/serverless/api",
-  "author": {
-    "name": "Benedict Romp",
-    "email": "b.romp@webtypen.de",
-    "url": "https://webtypen.de/"
-  },
-  "bugs": {
-    "url": "https://github.com/webtypen/jsframework/issues"
-  },
-  "bundleDependencies": false,
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "express-fileupload": "^1.2.0",
-    "glob": "^7.1.6",
-    "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.20",
-    "moment": "^2.29.1",
-    "mysql": "^2.18.1",
-    "nodemon": "^2.0.6",
-    "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0",
-    "symfony-style-console": "^1.0.0"
-  },
-  "deprecated": false,
-  "description": "A js framework by webtypen.de",
-  "homepage": "https://js-framework.webtypen.de/",
-  "license": "MIT",
-  "main": "index.js",
-  "name": "webtypen-jsframework",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/webtypen/jsframework.git"
-  },
-  "version": "1.0.3"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/webtypen/jsframework.git"
+    },
+    "version": "1.0.4"
 }
