@@ -12,16 +12,18 @@ class OverviewCommand extends ConsoleCommand {
         this.writeln("");
 
         this.writeln("<fg=yellow>Available commands:</>");
+        const width = "                                     ";
         for (let group in commandGroups) {
             if (!commandGroups[group] || commandGroups[group].length < 1) {
                 continue;
             }
 
-            if (group && group.trim() !== "" && group.trim() !== "0") {
-                this.writeln("<fg=yellow>" + group + "</>");
+            if (group && group.trim() !== "") {
+                if (group.trim() !== "0") {
+                    this.writeln("<fg=yellow>" + group + "</>");
+                }
 
                 for (let i in commandGroups[group]) {
-                    const width = "                                       ";
                     this.writeln(
                         " " +
                             commandGroups[group][i].signature +
