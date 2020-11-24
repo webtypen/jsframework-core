@@ -31,11 +31,20 @@ exports.boot = () => {
     // Load routes
     require("../../../routes");
 
+    app.use((err, req, res, next) => {
+        console.log("ERROR:");
+        console.log(err);
+        res.status(500).json({ status: "error", error: error });
+    });
+    console.log("LOG-INIT");
+
     // Start express-app
     const port = Config.get("app.port");
     app.listen(port, () => {
         console.log(`Example app listening at http://localhost:${port}`);
     });
+
+    return app;
 };
 
 exports.app = () => {
