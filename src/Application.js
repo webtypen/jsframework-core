@@ -2,6 +2,7 @@ const express = require("express");
 const fileupload = require("express-fileupload");
 const Connections = require("./Database/Connections");
 const Config = require("./Config");
+const Logger = require("./Logger");
 var app = express();
 
 exports.boot = () => {
@@ -30,6 +31,16 @@ exports.boot = () => {
 
     // Load routes
     require("../../../routes");
+
+    app.use((err, req, res, next) => {
+        if (env("APP_DEBUG") === "true") {
+            Logger.logError(err.message, err.stack);
+
+            res.status(500).json({ status: "error", message: err.message, stack: err.stack });
+        } else {
+            res.status(500).json({ status: "error", message: "Internal server error." });
+        }
+    });
 
     // Start express-app
     const port = Config.get("app.port");
