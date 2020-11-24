@@ -1,27 +1,33 @@
 {
-    "_from": "webtypen-jsframework@^1.0.0",
+    "_args": [
+        [
+            "webtypen-jsframework@1.0.5",
+            "/webdev/gymapp/api"
+        ]
+    ],
+    "_from": "webtypen-jsframework@1.0.5",
     "_id": "webtypen-jsframework@1.0.5",
     "_inBundle": false,
-    "_integrity": "sha512-ZUN7Wjmbgh4+annEy+EUQaDHd1OTrVgkqkZbRS877MGljRQlI7JC4JaEzExq3xjGUqkzjrCvzhF8ZnHob1AiUw==",
+    "_integrity": "sha512-gvBKtriPeMu8/REs6ehuueiTjXNBi99l4g7K5mk7lsR31eZ4fQA6HfJCZ7GDAbAstHFLZy+CaR5g9bzDBG4KaA==",
     "_location": "/webtypen-jsframework",
     "_phantomChildren": {},
     "_requested": {
-        "type": "range",
+        "type": "version",
         "registry": true,
-        "raw": "webtypen-jsframework@^1.0.0",
+        "raw": "webtypen-jsframework@1.0.5",
         "name": "webtypen-jsframework",
         "escapedName": "webtypen-jsframework",
-        "rawSpec": "^1.0.0",
+        "rawSpec": "1.0.5",
         "saveSpec": null,
-        "fetchSpec": "^1.0.0"
+        "fetchSpec": "1.0.5"
     },
     "_requiredBy": [
         "/"
     ],
-    "_resolved": "https://registry.npmjs.org/webtypen-jsframework/-/webtypen-jsframework-1.0.3.tgz",
+    "_resolved": "https://registry.npmjs.org/webtypen-jsframework/-/webtypen-jsframework-1.0.5.tgz",
     "_shasum": "79f7ee232d0718144b40aa5fa3808bfb0216012d",
-    "_spec": "webtypen-jsframework@^1.0.0",
-    "_where": "/webdev/serverless/api",
+    "_spec": "1.0.5",
+    "_where": "/webdev/gymapp/api",
     "author": {
         "name": "Benedict Romp",
         "email": "b.romp@webtypen.de",
@@ -30,7 +36,6 @@
     "bugs": {
         "url": "https://github.com/webtypen/jsframework/issues"
     },
-    "bundleDependencies": false,
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "dotenv": "^8.2.0",
@@ -56,5 +61,5 @@
         "type": "git",
         "url": "git+https://github.com/webtypen/jsframework.git"
     },
-    "version": "1.0.5"
+    "version": "1.0.8"
 }
