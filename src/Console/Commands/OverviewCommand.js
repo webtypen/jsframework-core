@@ -1,3 +1,4 @@
+"use strict";
 const ConsoleCommand = require("../ConsoleCommand");
 const ConsoleRegistry = require("../ConsoleRegistry");
 

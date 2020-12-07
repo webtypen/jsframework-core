@@ -1,3 +1,4 @@
+"use strict";
 const QueryBuilder = require("./QueryBuilder");
 const Connections = require("./Connections");
 
@@ -28,6 +29,22 @@ class Model {
         const builder = new QueryBuilder(model.connection);
         builder.setModelMapping(model);
         builder.table(model.table);
+
+        if (typeof id === "object" && Array.isArray(id)) {
+            for (let i in id) {
+                if (i == 0) {
+                    builder.where(model.keyColumn, "=", id[i]);
+                } else {
+                    builder.orWhere(model.keyColumn, "=", id[i]);
+                }
+
+                if (model.sortKey && model.sortKeyColumn) {
+                    builder.where(model.sortKeyColumn, "=", model.sortKey);
+                }
+            }
+            return builder.get();
+        }
+
         builder.where(model.keyColumn, "=", id);
 
         if (model.sortKey && model.sortKeyColumn) {

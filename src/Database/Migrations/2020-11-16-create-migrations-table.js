@@ -1,3 +1,4 @@
+"use strict";
 const { Migration } = require("webtypen-jsframework");
 
 class CreateMigrationsTable extends Migration {

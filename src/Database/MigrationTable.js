@@ -1,5 +1,4 @@
-const Config = require("../Config");
-
+"use strict";
 class MigrationTable {
     table = null;
     create = false;
