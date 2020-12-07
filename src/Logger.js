@@ -1,4 +1,6 @@
-"use strict";
+const fs = require("fs");
+const moment = require("moment");
+
 const datePrefix = () => {
     const d = new Date();
     return (
@@ -26,4 +28,32 @@ exports.debug = (message, date) => {
         return;
     }
     console.log(message);
+};
+
+exports.logError = (error, stack) => {
+    const date = moment();
+    const dir = "./storage/logs/" + date.format("YYYY") + "/" + date.format("MM");
+    const filename = "errors_" + date.format("YYYY-MM-DD") + ".log";
+
+    if (!fs.existsSync(dir)) {
+        fs.mkdir(dir, { recursive: true }, (err) => {
+            if (err) {
+                throw err;
+            }
+        });
+    }
+
+    const errorContent =
+        "[ERROR - " +
+        date.format() +
+        "]:\n" +
+        error +
+        (stack && stack.toString() && stack.toString().trim() !== "" ? stack.toString() : "") +
+        "\n";
+    console.log(errorContent);
+    fs.appendFile(dir + "/" + filename, errorContent, (err) => {
+        if (err) {
+            throw err;
+        }
+    });
 };

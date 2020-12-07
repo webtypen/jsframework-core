@@ -3,6 +3,7 @@ const express = require("express");
 const fileupload = require("express-fileupload");
 const Connections = require("./Database/Connections");
 const Config = require("./Config");
+const Logger = require("./Logger");
 var app = express();
 
 exports.boot = () => {
