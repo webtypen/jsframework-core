@@ -1,3 +1,4 @@
+"use strict";
 const Config = require("../Config");
 const Connections = require("./Connections");
 const moment = require("moment");
@@ -27,6 +28,17 @@ class QueryBuilder {
 
     where(column, operator, value) {
         this.queryData.filter.push({
+            filterType: "where",
+            column: column,
+            operator: operator,
+            value: value,
+        });
+        return this;
+    }
+
+    orWhere(column, operator, value) {
+        this.queryData.filter.push({
+            filterType: "orWhere",
             column: column,
             operator: operator,
             value: value,
@@ -35,18 +47,30 @@ class QueryBuilder {
     }
 
     async first() {
-        const connection = await Connections.getConnection(this.connection);
-        const data = await connection.queryBuilder("first", this.queryData);
-        if (!this.modelMapping) {
-            return data;
+        let data = null;
+        try {
+            const connection = await Connections.getConnection(this.connection);
+            data = await connection.queryBuilder("first", this.queryData);
+            if (!this.modelMapping) {
+                return data;
+            }
+        } catch (e) {
+            console.error(e);
+            throw new Error(e);
         }
 
         return this.handleModelMapping(data);
     }
 
     async get() {
-        const connection = await Connections.getConnection(this.connection);
-        const data = await connection.queryBuilder("get", this.queryData);
+        let data = null;
+        try {
+            const connection = await Connections.getConnection(this.connection);
+            data = await connection.queryBuilder("get", this.queryData);
+        } catch (e) {
+            console.error(e);
+            throw new Error(e);
+        }
         if (!this.modelMapping) {
             return data;
         }

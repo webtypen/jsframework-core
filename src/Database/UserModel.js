@@ -1,3 +1,4 @@
+"use strict";
 const Model = require("./Model");
 
 class UserModel extends Model {

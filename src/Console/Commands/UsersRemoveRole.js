@@ -1,4 +1,4 @@
-const bcrypt = require("bcryptjs");
+"use strict";
 const ConsoleCommand = require("../ConsoleCommand");
 const Config = require("../../Config");
 

@@ -1,3 +1,4 @@
+"use strict";
 const ConsoleCommand = require("../ConsoleCommand");
 
 class PresetReactCommand extends ConsoleCommand {

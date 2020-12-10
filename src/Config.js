@@ -1,3 +1,4 @@
+"use strict";
 const { get, set } = require("lodash");
 const Logger = require("./Logger");
 
@@ -6,10 +7,7 @@ var files = ["app", "auth", "database"];
 var config = {};
 
 exports.load = () => {
-    Logger.debug("Load config files:");
     for (let i in files) {
-        Logger.debug("   - " + files[i]);
-
         const conf = require(configDir + files[i]);
         if (conf) {
             config[files[i]] = conf;

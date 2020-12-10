@@ -1,3 +1,4 @@
+"use strict";
 const Application = require("./Application");
 
 const registerMiddleware = (method, path, middleware) => {
@@ -33,16 +34,32 @@ exports.route = (method, path, component, options) => {
         }
     }
 
+    const componentMethod = async (req, res, next) => {
+        return Promise.resolve(component(req, res, next)).catch((e) => {
+            console.log("catch");
+            console.error(e);
+
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Methods", "*");
+            res.header("Access-Control-Allow-Headers", "*");
+            res.header("x-powered-by", "webtpyen-jsframework");
+
+            res.status(200).send({
+                status: "error",
+            });
+        });
+    };
+
     if (method === "get") {
-        Application.app().get(path, component);
+        Application.app().get(path, componentMethod);
     } else if (method === "post") {
-        Application.app().post(path, component);
+        Application.app().post(path, componentMethod);
     } else if (method === "put") {
-        Application.app().put(path, component);
+        Application.app().put(path, componentMethod);
     } else if (method === "delete") {
-        Application.app().delete(path, component);
+        Application.app().delete(path, componentMethod);
     } else if (method === "any") {
-        Application.app().all(path, component);
+        Application.app().all(path, componentMethod);
     }
 };
 

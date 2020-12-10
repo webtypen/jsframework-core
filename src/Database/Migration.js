@@ -1,3 +1,4 @@
+"use strict";
 const Connections = require("./Connections");
 const Config = require("../Config");
 const MigrationTable = require("./MigrationTable");
