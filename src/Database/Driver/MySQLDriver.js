@@ -1,3 +1,4 @@
+"use strict";
 const moment = require("moment");
 const mysql = require("mysql");
 const util = require("util");
@@ -217,7 +218,7 @@ class MySQLDriver extends BaseDriver {
 
             for (let i in queryData.filter) {
                 query +=
-                    (i > 0 ? " AND " : "") +
+                    (i > 0 ? (queryData.filter.filterType === "orWhere" ? " OR " : " AND ") : "") +
                     "`" +
                     queryData.filter[i].column +
                     "` " +

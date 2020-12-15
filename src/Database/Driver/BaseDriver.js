@@ -1,3 +1,4 @@
+"use strict";
 class BaseDriver {
     static name = null;
     config = null;
@@ -17,7 +18,7 @@ class BaseDriver {
     update() {}
     delete() {}
     queryBuilder() {}
-    
+
     getConnection() {
         return this.connection;
     }

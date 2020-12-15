@@ -1,8 +1,10 @@
+"use strict";
 const Config = require("../Config");
 
 var drivers = {
     mysql: require("./Driver/MySQLDriver"),
     dynamodb: require("./Driver/DynamoDBDriver"),
+    mongodb: require("./Driver/MongoDBDriver"),
 };
 var connections = {};
 
@@ -40,7 +42,7 @@ exports.createConnection = async (key) => {
 };
 
 exports.getConnection = async (key) => {
-    if (key === null) {
+    if (key === null || key === undefined) {
         key = Config.get("database.default");
     }
 

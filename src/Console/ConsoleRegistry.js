@@ -1,3 +1,4 @@
+"use strict";
 var commands = [];
 
 exports.register = (commandClass) => {
