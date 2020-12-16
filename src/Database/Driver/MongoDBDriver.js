@@ -130,18 +130,62 @@ class MongoDBDriver extends BaseDriver {
                 }
             }
 
-            if (type === "first") {
-                this.dbo.collection(queryData.table).findOne(filter, (err, data) => {
-                    if (err) {
-                        throw err;
+            // Sortierung anwenden
+            let orderBy = null;
+            if (queryData.orderBy && queryData.orderBy.length > 0) {
+                for (let i in queryData.orderBy) {
+                    if (!queryData.orderBy[i] || !queryData.orderBy[i].column || !queryData.orderBy[i].order) {
+                        continue;
                     }
 
-                    resolve(data ? data : null);
-                });
+                    if (orderBy === null) {
+                        orderBy = {};
+                    }
+
+                    orderBy[queryData.orderBy[i].column] =
+                        queryData.orderBy[i].order.trim().toUpperCase() === "DESC" ? -1 : 1;
+                }
+            }
+
+            if (type === "count") {
+                this.dbo
+                    .collection(queryData.table)
+                    .find(filter)
+                    .count(function (err, data) {
+                        if (err) {
+                            throw err;
+                        }
+
+                        resolve(data);
+                    });
+            } else if (type === "first") {
+                if (orderBy === null) {
+                    this.dbo.collection(queryData.table).findOne(filter, (err, data) => {
+                        if (err) {
+                            throw err;
+                        }
+
+                        resolve(data ? data : null);
+                    });
+                } else {
+                    this.dbo
+                        .collection(queryData.table)
+                        .find(filter)
+                        .sort(orderBy)
+                        .limit(1)
+                        .toArray(function (err, data) {
+                            if (err) {
+                                throw err;
+                            }
+
+                            resolve(data && data.length > 0 ? data[0] : null);
+                        });
+                }
             } else {
                 this.dbo
                     .collection(queryData.table)
                     .find(filter)
+                    .sort(orderBy)
                     .toArray(function (err, data) {
                         if (err) {
                             throw err;

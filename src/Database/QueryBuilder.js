@@ -10,6 +10,8 @@ class QueryBuilder {
         table: null,
         filter: [],
         orderBy: [],
+        limit: null,
+        offset: null,
     };
 
     constructor(connection) {
@@ -46,6 +48,28 @@ class QueryBuilder {
         return this;
     }
 
+    orderBy(column, order) {
+        this.queryData.orderBy.push({
+            column: column,
+            order: order,
+        });
+        return this;
+    }
+
+    take(amount, offset) {
+        this.queryData.limit = amount;
+
+        if (offset !== undefined) {
+            this.queryData.offset = offset;
+        }
+        return this;
+    }
+
+    offset(offset) {
+        this.queryData.offset = offset;
+        return this;
+    }
+
     async first() {
         let data = null;
         try {
@@ -76,6 +100,19 @@ class QueryBuilder {
         }
 
         return data && data.length > 0 ? data.map((el) => this.handleModelMapping(el)) : null;
+    }
+
+    async count() {
+        let data = null;
+        try {
+            const connection = await Connections.getConnection(this.connection);
+            data = await connection.queryBuilder("count", this.queryData);
+        } catch (e) {
+            console.error(e);
+            throw new Error(e);
+        }
+
+        return data;
     }
 
     handleModelMapping(element) {

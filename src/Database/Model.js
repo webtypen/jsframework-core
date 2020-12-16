@@ -71,6 +71,28 @@ class Model {
         return builder;
     }
 
+    static orderBy(column, order) {
+        const model = new this();
+        const builder = new QueryBuilder(model.connection);
+        builder.setModelMapping(model);
+        builder.table(model.table);
+
+        builder.orderBy(column, order);
+
+        return builder;
+    }
+
+    static take(amount, offset) {
+        const model = new this();
+        const builder = new QueryBuilder(model.connection);
+        builder.setModelMapping(model);
+        builder.table(model.table);
+
+        builder.take(amount, offset);
+
+        return builder;
+    }
+
     async getConnection() {
         return await Connections.getConnection(this.connection);
     }
