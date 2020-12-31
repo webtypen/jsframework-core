@@ -1,3 +1,4 @@
+"use strict";
 const { SymfonyStyle } = require("symfony-style-console");
 
 class ConsoleCommand {
@@ -31,12 +32,39 @@ class ConsoleCommand {
         return this.output.success(line);
     }
 
+    error(line) {
+        return this.output.error(line);
+    }
+
+    warning(line) {
+        return this.output.warning(line);
+    }
+
+    caution(line) {
+        return this.output.caution(line);
+    }
+
     ask(question) {
         return this.output.ask(question);
     }
 
     askHidden(question) {
         return this.output.askHidden(question);
+    }
+
+    progress(length) {
+        return this.output.progressStart(length);
+    }
+
+    progressAdvance(amount) {
+        if (amount !== undefined && amount !== null && amount !== false) {
+            return this.output.progressAdvance(amount);
+        }
+        return this.output.progressAdvance();
+    }
+
+    progressFinish() {
+        return this.output.progressFinish();
     }
 }
 

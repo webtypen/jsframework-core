@@ -1,3 +1,4 @@
+"use strict";
 const QueryBuilder = require("./QueryBuilder");
 const Connections = require("./Connections");
 
@@ -16,7 +17,9 @@ class Model {
         "keyColumn",
         "sortKey",
         "sortKeyColumn",
+        "ignored",
     ];
+    ignored = [];
     hidden = [];
     casts = {
         created_at: "datetime",
@@ -28,6 +31,22 @@ class Model {
         const builder = new QueryBuilder(model.connection);
         builder.setModelMapping(model);
         builder.table(model.table);
+
+        if (typeof id === "object" && Array.isArray(id)) {
+            for (let i in id) {
+                if (i == 0) {
+                    builder.where(model.keyColumn, "=", id[i]);
+                } else {
+                    builder.orWhere(model.keyColumn, "=", id[i]);
+                }
+
+                if (model.sortKey && model.sortKeyColumn) {
+                    builder.where(model.sortKeyColumn, "=", model.sortKey);
+                }
+            }
+            return builder.get();
+        }
+
         builder.where(model.keyColumn, "=", id);
 
         if (model.sortKey && model.sortKeyColumn) {
@@ -48,6 +67,43 @@ class Model {
         }
 
         builder.where(column, operator, value);
+
+        return builder;
+    }
+
+    static whereIn(column, array) {
+        const model = new this();
+        const builder = new QueryBuilder(model.connection);
+        builder.setModelMapping(model);
+        builder.table(model.table);
+
+        if (model.sortKey && model.sortKeyColumn) {
+            builder.where(model.sortKeyColumn, "=", model.sortKey);
+        }
+
+        builder.whereIn(column, array);
+
+        return builder;
+    }
+
+    static orderBy(column, order) {
+        const model = new this();
+        const builder = new QueryBuilder(model.connection);
+        builder.setModelMapping(model);
+        builder.table(model.table);
+
+        builder.orderBy(column, order);
+
+        return builder;
+    }
+
+    static take(amount, offset) {
+        const model = new this();
+        const builder = new QueryBuilder(model.connection);
+        builder.setModelMapping(model);
+        builder.table(model.table);
+
+        builder.take(amount, offset);
 
         return builder;
     }
@@ -76,7 +132,7 @@ class Model {
     async save() {
         const values = {};
         for (let i in this) {
-            if (!this.frameworkIgnored.includes(i)) {
+            if (!this.frameworkIgnored.includes(i) && !this.ignored.includes(i)) {
                 values[i] = this[i];
             }
         }
@@ -84,14 +140,22 @@ class Model {
         if (this[this.keyColumn] && this[this.keyColumn] !== null && this[this.keyColumn].toString().trim() !== "") {
             return await this.update(this[this.keyColumn], values);
         } else {
-            return await this.insert(values);
+            const data = await this.insert(values);
+            if (data && typeof data === "object" && data.primaryKey && data.primaryKey.trim() !== "") {
+                this[this.keyColumn] = data.primaryKey;
+            }
+
+            return data;
         }
     }
 
     toArray(withHiddenFields) {
         const values = {};
         for (let i in this) {
-            if (withHiddenFields || (!this.frameworkIgnored.includes(i) && !this.hidden.includes(i))) {
+            if (
+                withHiddenFields ||
+                (!this.frameworkIgnored.includes(i) && !this.hidden.includes(i) && !this.ignored.includes(i))
+            ) {
                 values[i] = this[i];
             }
         }
@@ -106,7 +170,7 @@ class Model {
 
     async insert(mappings) {
         const connection = await this.getConnection();
-        return connection.insert(this.table, mappings);
+        return await connection.insert(this.table, mappings);
     }
 
     delete() {}

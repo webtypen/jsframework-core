@@ -1,3 +1,4 @@
+"use strict";
 const { glob } = require("glob");
 const moment = require("moment");
 const Connections = require("../../Database/Connections");

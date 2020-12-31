@@ -1,3 +1,4 @@
+"use strict";
 const AWS = require("aws-sdk");
 const moment = require("moment");
 const util = require("util");
@@ -49,18 +50,6 @@ class DynamoDBDriver extends BaseDriver {
 
     async createTable(tableName, migrationTable) {}
 
-    async query(statement) {
-        const query = util.promisify(this.connection.query).bind(this.connection);
-
-        try {
-            return await query(statement);
-        } catch (error) {
-            console.error(error);
-        }
-
-        return null;
-    }
-
     async tableExists(tableName) {}
 
     async columnExists(tableName, columnName) {}
@@ -97,7 +86,11 @@ class DynamoDBDriver extends BaseDriver {
         let attributesValues = {};
         for (let i in queryData.filter) {
             if (filter.trim() !== "") {
-                filter += " and ";
+                if (queryData.filter[i].filterType === "orWhere") {
+                    filter += " or ";
+                } else {
+                    filter += " and ";
+                }
             }
 
             filter += "#val" + vals.toString() + " " + queryData.filter[i].operator + " :val" + vals.toString();
@@ -123,6 +116,7 @@ class DynamoDBDriver extends BaseDriver {
         try {
             data = await this.dynamodb.scan(params).promise();
         } catch (error) {
+            console.error(error);
             throw new Error(error);
         }
 
