@@ -1,4 +1,3 @@
-"use strict";
 const QueryBuilder = require("./QueryBuilder");
 const Connections = require("./Connections");
 
@@ -125,8 +124,16 @@ class Model {
         return await builder.get();
     }
 
-    delete() {
-        // delete
+    async delete() {
+        const builder = new QueryBuilder(this.connection);
+        builder.setModelMapping(this);
+        builder.table(this.table);
+
+        builder.where(this.keyColumn, "=", this[this.keyColumn]);
+        if (this.sortKey && this.sortKeyColumn) {
+            builder.where(this.sortKeyColumn, "=", this.sortKey);
+        }
+        return await builder.delete();
     }
 
     async save() {
@@ -172,8 +179,6 @@ class Model {
         const connection = await this.getConnection();
         return await connection.insert(this.table, mappings);
     }
-
-    delete() {}
 }
 
 module.exports = Model;
