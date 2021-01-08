@@ -81,10 +81,16 @@ class MongoDBDriver extends BaseDriver {
             let currentFilter = [];
             let currentFilterType = null;
             for (let i in queryData.filter) {
-                const value =
+                let value =
                     queryData.filter[i].column === "_id"
                         ? new mongo.ObjectID(queryData.filter[i].value)
                         : queryData.filter[i].value;
+
+                if (queryData.filter[i].operator === "!=") {
+                    value = {
+                        $ne: value,
+                    };
+                }
 
                 if (queryData.filter[i].filterType === "where") {
                     currentFilter.push({

@@ -112,6 +112,38 @@ class DynamoDBDriver extends BaseDriver {
             params.ExpressionAttributeValues = attributesValues;
         }
 
+        if (type === "delete") {
+            const data = await this.dynamodb.scan(params).promise();
+            let remove;
+            if (data && data.Items && data.Items.length > 0) {
+                for (let i in data.Items) {
+                    if (
+                        queryData.modelMapping &&
+                        queryData.modelMapping.sortKey &&
+                        queryData.modelMapping.sortKeyColumn
+                    ) {
+                        const deleteParams = {
+                            TableName: queryData.table,
+                            Key: {
+                                [queryData.modelMapping.keyColumn]: data.Items[i][queryData.modelMapping.keyColumn],
+                                [queryData.modelMapping.sortKeyColumn]: queryData.modelMapping.sortKey,
+                            },
+                        };
+
+                        remove = await this.dynamodb.delete(deleteParams).promise();
+                    } else {
+                        remove = this.dynamodb
+                            .delete({
+                                TableName: queryData.table,
+                                Key: data.Items[i],
+                            })
+                            .promise();
+                    }
+                }
+            }
+            return remove;
+        }
+
         let data = null;
         try {
             data = await this.dynamodb.scan(params).promise();

@@ -5,13 +5,13 @@ const moment = require("moment");
 
 class QueryBuilder {
     connection = null;
-    modelMapping = null;
     queryData = {
         table: null,
         filter: [],
         orderBy: [],
         limit: null,
         offset: null,
+        modelMapping: null,
     };
 
     constructor(connection) {
@@ -19,7 +19,7 @@ class QueryBuilder {
     }
 
     setModelMapping(model) {
-        this.modelMapping = model;
+        this.queryData.modelMapping = model;
         return this;
     }
 
@@ -84,7 +84,7 @@ class QueryBuilder {
         try {
             const connection = await Connections.getConnection(this.connection);
             data = await connection.queryBuilder("first", this.queryData);
-            if (!this.modelMapping) {
+            if (!this.queryData.modelMapping) {
                 return data;
             }
         } catch (e) {
@@ -104,7 +104,7 @@ class QueryBuilder {
             console.error(e);
             throw new Error(e);
         }
-        if (!this.modelMapping) {
+        if (!this.queryData.modelMapping) {
             return data;
         }
 
@@ -124,16 +124,33 @@ class QueryBuilder {
         return data;
     }
 
+    async delete() {
+        let data = null;
+
+        try {
+            const connection = await Connections.getConnection(this.connection);
+            data = await connection.queryBuilder("delete", this.queryData);
+        } catch (e) {
+            console.error(e);
+            throw new Error(e);
+        }
+
+        return data;
+    }
+
     handleModelMapping(element) {
         if (!element) {
             return null;
         }
 
-        if (!this.modelMapping) {
+        if (!this.queryData.modelMapping) {
             throw new Error("Missing model-mapping element");
         }
 
-        let clone = Object.assign(Object.create(Object.getPrototypeOf(this.modelMapping)), this.modelMapping);
+        let clone = Object.assign(
+            Object.create(Object.getPrototypeOf(this.queryData.modelMapping)),
+            this.queryData.modelMapping
+        );
         for (let i in element) {
             if (clone.casts && clone.casts[i]) {
                 clone[i] =
