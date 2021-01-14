@@ -15,8 +15,8 @@ exports.load = () => {
     }
 };
 
-exports.get = (configKey) => {
-    return get(config, configKey);
+exports.get = (configKey, defaultVal) => {
+    return get(config, configKey, defaultVal);
 };
 
 exports.set = (configKey, value) => {

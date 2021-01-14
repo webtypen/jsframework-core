@@ -65,13 +65,15 @@ class MongoDBDriver extends BaseDriver {
         }
 
         return await new Promise(async (resolve) => {
-            this.dbo.collection(tableName).updateOne({ [keyColumn]: id }, { $set: mappings }, (err, res) => {
-                if (err) {
-                    throw err;
-                }
+            this.dbo
+                .collection(tableName)
+                .updateOne({ [keyColumn]: mongo.ObjectID(id) }, { $set: mappings }, (err, res) => {
+                    if (err) {
+                        throw err;
+                    }
 
-                resolve(true);
-            });
+                    resolve(true);
+                });
         });
     }
 

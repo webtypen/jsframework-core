@@ -28,8 +28,10 @@ exports.boot = () => {
             res.header("x-powered-by", "webtpyen-jsframework");
             next();
         });
-        app.use(fileupload());
-        app.use(express.json());
+
+        const limit = Config.get("app.requests.limit", "25mb");
+        app.use(express.json({ limit: limit }));
+        app.use(express.urlencoded({ limit: limit, extended: true }));
 
         // Load routes
         require("../../../routes");
