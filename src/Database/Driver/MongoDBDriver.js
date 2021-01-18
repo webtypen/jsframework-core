@@ -37,11 +37,11 @@ class MongoDBDriver extends BaseDriver {
         }
     }
 
-    async createTable(tableName, migrationTable) {}
+    async createTable(tableName, migrationTable) { }
 
-    async tableExists(tableName) {}
+    async tableExists(tableName) { }
 
-    async columnExists(tableName, columnName) {}
+    async columnExists(tableName, columnName) { }
 
     async insert(tableName, mappings) {
         return await new Promise(async (resolve) => {
@@ -193,6 +193,14 @@ class MongoDBDriver extends BaseDriver {
                             resolve(data && data.length > 0 ? data[0] : null);
                         });
                 }
+            } else if (type === "delete") {
+                this.dbo.collection(queryData.table).deleteMany(filter, function (err, data) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    resolve(true);
+                });
             } else {
                 this.dbo
                     .collection(queryData.table)
