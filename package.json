@@ -60,7 +60,7 @@
     "license": "MIT",
     "main": "index.js",
     "name": "webtypen-jsframework",
-    "version": "1.0.17",
+    "version": "1.0.20",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/webtypen/jsframework.git"

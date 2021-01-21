@@ -9,6 +9,7 @@ class QueryBuilder {
         table: null,
         filter: [],
         orderBy: [],
+        select: null,
         limit: null,
         offset: null,
         modelMapping: null,
@@ -25,6 +26,22 @@ class QueryBuilder {
 
     table(table) {
         this.queryData.table = table;
+        return this;
+    }
+
+    select(array) {
+        if (array && array.length > 0) {
+            for (let i in array) {
+                if (array[i] === undefined || array[i] === null) {
+                    continue;
+                }
+
+                if (this.queryData.select === null) {
+                    this.queryData.select = [];
+                }
+                this.queryData.select.push(array[i]);
+            }
+        }
         return this;
     }
 
