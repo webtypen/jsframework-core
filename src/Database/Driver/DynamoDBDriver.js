@@ -107,6 +107,15 @@ class DynamoDBDriver extends BaseDriver {
             params.FilterExpression = filter;
         }
 
+        if (queryData.select && queryData.select.length > 0) {
+            const select = [];
+            for (let i in queryData.select) {
+                select.push("#select" + i);
+                attributes["#select" + i] = queryData.select[i];
+            }
+            params.ProjectionExpression = select;
+        }
+
         if (vals > 0) {
             params.ExpressionAttributeNames = attributes;
             params.ExpressionAttributeValues = attributesValues;

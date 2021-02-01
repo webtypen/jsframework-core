@@ -11,3 +11,4 @@ exports.QueryBuilder = require("./src/Database/QueryBuilder");
 exports.Config = require("./src/Config");
 exports.Validator = require("./src/Validator");
 exports.StringFunctions = require("./src/lib/StringFunctions");
+exports.NumericFunctions = require("./src/lib/NumericFunctions");

@@ -55,6 +55,21 @@ class Model {
         return builder.first();
     }
 
+    static select(array) {
+        const model = new this();
+        const builder = new QueryBuilder(model.connection);
+        builder.setModelMapping(model);
+        builder.table(model.table);
+
+        if (model.sortKey && model.sortKeyColumn) {
+            builder.where(model.sortKeyColumn, "=", model.sortKey);
+        }
+
+        builder.select(array);
+
+        return builder;
+    }
+
     static where(column, operator, value) {
         const model = new this();
         const builder = new QueryBuilder(model.connection);
