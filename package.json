@@ -1,40 +1,11 @@
 {
-    "_args": [
-        [
-            "webtypen-jsframework@1.0.15",
-            "/webdev/gymapp/api"
-        ]
-    ],
-    "_from": "webtypen-jsframework@1.0.14",
-    "_id": "webtypen-jsframework@1.0.15",
-    "_inBundle": false,
-    "_integrity": "sha512-gvBKtriPeMu8/REs6ehuueiTjXNBi99l4g7K5mk7lsR31eZ4fQA6HfJCZ7GDAbAstHFLZy+CaR5g9bzDBG4KaA==",
-    "_location": "/webtypen-jsframework",
-    "_phantomChildren": {},
-    "_requested": {
-        "type": "version",
-        "registry": true,
-        "raw": "webtypen-jsframework@1.0.15",
-        "name": "webtypen-jsframework",
-        "escapedName": "webtypen-jsframework",
-        "rawSpec": "1.0.15",
-        "saveSpec": null,
-        "fetchSpec": "1.0.15"
-    },
-    "_requiredBy": [
-        "/"
-    ],
-    "_resolved": "https://registry.npmjs.org/webtypen-jsframework/-/webtypen-jsframework-1.0.5.tgz",
-    "_shasum": "79f7ee232d0718144b40aa5fa3808bfb0216012d",
-    "_spec": "1.0.15",
-    "_where": "/webdev/gymapp/api",
     "author": {
         "name": "Benedict Romp",
         "email": "b.romp@webtypen.de",
         "url": "https://webtypen.de/"
     },
     "bugs": {
-        "url": "https://github.com/webtypen/jsframework/issues"
+        "url": "https://github.com/webtypen/jsframework-core/issues"
     },
     "dependencies": {
         "bcryptjs": "^2.4.3",
@@ -51,18 +22,18 @@
         "passport-jwt": "^4.0.0",
         "symfony-style-console": "^1.0.0",
         "aws-sdk": "^2.806.0",
-        "mongodb": "^3.6.3",
+        "mongodb": "^3.6.4",
         "validator-js": "^0.2.1"
     },
     "deprecated": false,
-    "description": "A js framework by webtypen.de",
-    "homepage": "https://js-framework.webtypen.de/",
+    "description": "The core package of the jsframework by webtypen.de",
+    "homepage": "https://js.webtypen.de/",
     "license": "MIT",
     "main": "index.js",
-    "name": "webtypen-jsframework",
+    "name": "webtypen-jsframework-core",
     "version": "1.0.22",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/webtypen/jsframework.git"
+        "url": "git+https://github.com/webtypen/jsframework-core.git"
     }
 }

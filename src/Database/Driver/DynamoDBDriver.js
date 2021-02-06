@@ -155,6 +155,7 @@ class DynamoDBDriver extends BaseDriver {
 
         let data = null;
         try {
+            console.log(params);
             data = await this.dynamodb.scan(params).promise();
         } catch (error) {
             console.error(error);

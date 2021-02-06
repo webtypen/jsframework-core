@@ -15,7 +15,9 @@ class MongoDBDriver extends BaseDriver {
 
     async connect() {
         return await new Promise(async (resolve) => {
-            const url = "mongodb://" + this.config.host + ":" + this.config.port + "/";
+            const url = this.config.url
+                ? this.config.url
+                : "mongodb://" + this.config.host + ":" + this.config.port + "/";
             this.client = mongo.MongoClient;
 
             this.client.connect(url, { useUnifiedTopology: true }, (err, db) => {
@@ -37,11 +39,11 @@ class MongoDBDriver extends BaseDriver {
         }
     }
 
-    async createTable(tableName, migrationTable) { }
+    async createTable(tableName, migrationTable) {}
 
-    async tableExists(tableName) { }
+    async tableExists(tableName) {}
 
-    async columnExists(tableName, columnName) { }
+    async columnExists(tableName, columnName) {}
 
     async insert(tableName, mappings) {
         return await new Promise(async (resolve) => {
