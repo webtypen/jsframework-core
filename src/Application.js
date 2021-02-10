@@ -21,7 +21,7 @@ exports.boot = () => {
         require("./Auth/AuthInit")(app);
 
         // Middleware
-        app.use(function (req, res, next) {
+        app.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Methods", "*");
             res.header("Access-Control-Allow-Headers", "*");
@@ -32,6 +32,18 @@ exports.boot = () => {
         const limit = Config.get("app.requests.limit", "25mb");
         app.use(express.json({ limit: limit }));
         app.use(express.urlencoded({ limit: limit, extended: true }));
+
+        // Error Handling
+        app.use((err, req, res, next) => {
+            res.status(500);
+            res.send({
+                status: "error",
+                message:
+                    env("APP_ERROR500") && env("APP_ERROR500").toString().trim() !== ""
+                        ? env("APP_ERROR500")
+                        : "Internal Server Error",
+            });
+        });
 
         // Load routes
         require("../../../routes");

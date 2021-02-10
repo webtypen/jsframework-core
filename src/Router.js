@@ -36,7 +36,6 @@ exports.route = (method, path, component, options) => {
 
     const componentMethod = async (req, res, next) => {
         return Promise.resolve(component(req, res, next)).catch((e) => {
-            console.log("catch");
             console.error(e);
 
             res.header("Access-Control-Allow-Origin", "*");
@@ -44,8 +43,26 @@ exports.route = (method, path, component, options) => {
             res.header("Access-Control-Allow-Headers", "*");
             res.header("x-powered-by", "webtpyen-jsframework");
 
-            res.status(200).send({
+            if (env("APP_DEBUG") && env("APP_DEBUG").toString().trim() === "true") {
+                if (e) {
+                    for (let i in e) {
+                        console.log(i, e);
+                    }
+
+                    return res.status(500).send({
+                        status: "error",
+                        message: e.toString(),
+                        error: e.stack,
+                    });
+                }
+            }
+
+            res.status(500).send({
                 status: "error",
+                message:
+                    env("APP_ERROR500") && env("APP_ERROR500").toString().trim() !== ""
+                        ? env("APP_ERROR500")
+                        : "Internal Server Error",
             });
         });
     };
