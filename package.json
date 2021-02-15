@@ -31,7 +31,7 @@
     "license": "MIT",
     "main": "index.js",
     "name": "webtypen-jsframework-core",
-    "version": "1.0.23",
+    "version": "1.0.24",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/webtypen/jsframework-core.git"

@@ -161,10 +161,23 @@ class MongoDBDriver extends BaseDriver {
                 }
             }
 
+            if (!this.dbo) {
+                console.log("Unexpected reconnect.");
+                await this.connect();
+            }
+
+            const options = {};
+            if (queryData.select && queryData.select.length > 0) {
+                options.projection = {};
+                for (let i in queryData.select) {
+                    options.projection[queryData.select[i]] = 1;
+                }
+            }
+            
             if (type === "count") {
                 this.dbo
                     .collection(queryData.table)
-                    .find(filter)
+                    .find(filter, options)
                     .count(function (err, data) {
                         if (err) {
                             throw err;
@@ -184,7 +197,7 @@ class MongoDBDriver extends BaseDriver {
                 } else {
                     this.dbo
                         .collection(queryData.table)
-                        .find(filter)
+                        .find(filter, options)
                         .sort(orderBy)
                         .limit(1)
                         .toArray(function (err, data) {
@@ -206,7 +219,7 @@ class MongoDBDriver extends BaseDriver {
             } else {
                 this.dbo
                     .collection(queryData.table)
-                    .find(filter)
+                    .find(filter, options)
                     .sort(orderBy)
                     .toArray(function (err, data) {
                         if (err) {
