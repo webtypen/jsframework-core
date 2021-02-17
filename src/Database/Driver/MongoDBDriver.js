@@ -173,7 +173,7 @@ class MongoDBDriver extends BaseDriver {
                     options.projection[queryData.select[i]] = 1;
                 }
             }
-            
+
             if (type === "count") {
                 this.dbo
                     .collection(queryData.table)
@@ -187,7 +187,7 @@ class MongoDBDriver extends BaseDriver {
                     });
             } else if (type === "first") {
                 if (orderBy === null) {
-                    this.dbo.collection(queryData.table).findOne(filter, (err, data) => {
+                    this.dbo.collection(queryData.table).findOne(filter, options, (err, data) => {
                         if (err) {
                             throw err;
                         }
