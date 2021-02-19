@@ -1,6 +1,6 @@
 const validatorRules = {
     required: (field, object, args, options) => {
-        const fieldName = options.names && options.names[field] ? options.names[field] : field;
+        const fieldName = options && options.names && options.names[field] ? options.names[field] : field;
         return object[field] === undefined || object[field] === null || object[field].toString().trim() === ""
             ? "Das Feld `" + fieldName + "` muss ausgefüllt werden"
             : null;
@@ -9,15 +9,15 @@ const validatorRules = {
         const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
         if (!emailRegexp.test(object[field])) {
-            const fieldName = options.names && options.names[field] ? options.names[field] : field;
+            const fieldName = options && options.names && options.names[field] ? options.names[field] : field;
             return "Das Feld `" + fieldName + "` muss eine gültige E-Mail Adresse beinhalten";
         }
         return null;
     },
     equals: (field, object, args, options) => {
         if (object[field] !== object[args[1]]) {
-            const fieldName = options.names && options.names[field] ? options.names[field] : field;
-            const fieldName2 = options.names && options.names[args[1]] ? options.names[args[1]] : field;
+            const fieldName = options && options.names && options.names[field] ? options.names[field] : field;
+            const fieldName2 = options && options.names && options.names[args[1]] ? options.names[args[1]] : field;
             return "Das Feld `" + fieldName + "` stimmt nicht mit dem Feld `" + fieldName2 + "` überein";
         }
         return null;
