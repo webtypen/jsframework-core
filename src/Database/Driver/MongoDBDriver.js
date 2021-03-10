@@ -220,6 +220,8 @@ class MongoDBDriver extends BaseDriver {
                 this.dbo
                     .collection(queryData.table)
                     .find(filter, options)
+                    .limit(queryData.limit ? queryData.limit : 0)
+                    .skip(queryData.offset ? queryData.offset : 0)
                     .sort(orderBy)
                     .toArray(function (err, data) {
                         if (err) {
