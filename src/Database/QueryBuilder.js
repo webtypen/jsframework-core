@@ -13,6 +13,7 @@ class QueryBuilder {
         limit: null,
         offset: null,
         modelMapping: null,
+        collation: null,
     };
 
     constructor(connection) {
@@ -93,6 +94,11 @@ class QueryBuilder {
 
     offset(offset) {
         this.queryData.offset = offset;
+        return this;
+    }
+
+    collation(collation) {
+        this.queryData.collation = collation;
         return this;
     }
 
