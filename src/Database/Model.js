@@ -139,6 +139,19 @@ class Model {
         return await builder.get();
     }
 
+    static async count() {
+        const model = new this();
+        const builder = new QueryBuilder(model.connection);
+        builder.setModelMapping(model);
+        builder.table(model.table);
+
+        if (model.sortKey && model.sortKeyColumn) {
+            builder.where(model.sortKeyColumn, "=", model.sortKey);
+        }
+
+        return await builder.count();
+    }
+
     async delete() {
         const builder = new QueryBuilder(this.connection);
         builder.setModelMapping(this);

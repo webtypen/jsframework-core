@@ -1,5 +1,6 @@
 "use strict";
 const Application = require("./Application");
+const Config = require("./Config");
 
 const registerMiddleware = (method, path, middleware) => {
     if (middleware === "auth") {
@@ -24,6 +25,11 @@ const registerMiddleware = (method, path, middleware) => {
 };
 
 exports.route = (method, path, component, options) => {
+    const prefix = Config.get("app.router.prefix");
+    if (prefix && prefix.trim() !== "") {
+        path = prefix.trim() + path;
+    }
+
     if (options && options.middleware) {
         if (Array.isArray(options.middleware)) {
             for (let i in options.middleware) {
