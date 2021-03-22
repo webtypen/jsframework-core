@@ -161,6 +161,21 @@ class QueryBuilder {
         return data;
     }
 
+    async aggregate(settings) {
+        let data = null;
+
+        try {
+            this.queryData.aggregate = settings;
+            const connection = await Connections.getConnection(this.connection);
+            data = await connection.queryBuilder("aggregate", this.queryData);
+        } catch (e) {
+            console.error(e);
+            throw new Error(e);
+        }
+
+        return data && data.length > 0 ? data.map((el) => this.handleModelMapping(el)) : null;
+    }
+
     handleModelMapping(element) {
         if (!element) {
             return null;

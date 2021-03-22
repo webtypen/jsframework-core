@@ -1,4 +1,10 @@
 {
+    "name": "@webtypen/jsframework-core",
+    "version": "1.1.0",
+    "description": "The core package of the jsframework by webtypen.de",
+    "homepage": "https://js.webtypen.de/",
+    "license": "MIT",
+    "main": "index.js",
     "author": {
         "name": "Benedict Romp",
         "email": "b.romp@webtypen.de",
@@ -6,6 +12,10 @@
     },
     "bugs": {
         "url": "https://github.com/webtypen/jsframework-core/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/webtypen/jsframework-core.git"
     },
     "dependencies": {
         "bcryptjs": "^2.4.3",
@@ -24,16 +34,5 @@
         "aws-sdk": "^2.806.0",
         "mongodb": "^3.6.4",
         "validator-js": "^0.2.1"
-    },
-    "deprecated": false,
-    "description": "The core package of the jsframework by webtypen.de",
-    "homepage": "https://js.webtypen.de/",
-    "license": "MIT",
-    "main": "index.js",
-    "name": "webtypen-jsframework-core",
-    "version": "1.0.28",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/webtypen/jsframework-core.git"
     }
 }

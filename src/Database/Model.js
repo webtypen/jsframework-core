@@ -122,6 +122,15 @@ class Model {
         return builder;
     }
 
+    static async aggregate(settings) {
+        const model = new this();
+        const builder = new QueryBuilder(model.connection);
+        builder.setModelMapping(model);
+        builder.table(model.table);
+
+        return await builder.aggregate(settings);
+    }
+
     async getConnection() {
         return await Connections.getConnection(this.connection);
     }
