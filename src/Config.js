@@ -2,7 +2,7 @@
 const { get, set } = require("lodash");
 const Logger = require("./Logger");
 
-var configDir = "../../../config/";
+var configDir = "../../../../config/";
 var files = ["app", "auth", "database"];
 var config = {};
 

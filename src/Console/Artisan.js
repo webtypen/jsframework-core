@@ -38,7 +38,7 @@ ConsoleRegistry.register(CompileCommand);
 const commandFiles = glob.sync("./app/Commands/**/*.js");
 if (commandFiles && commandFiles.length > 0) {
     for (let i in commandFiles) {
-        ConsoleRegistry.register(require("../../../." + commandFiles[i]));
+        ConsoleRegistry.register(require("../../../../." + commandFiles[i]));
     }
 }
 

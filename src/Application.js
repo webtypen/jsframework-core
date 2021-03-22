@@ -46,7 +46,7 @@ exports.boot = () => {
         });
 
         // Load routes
-        require("../../../routes");
+        require("../../../../routes");
 
         // Start express-app
         const port = Config.get("app.port");

@@ -166,6 +166,7 @@ class MongoDBDriver extends BaseDriver {
                 await this.connect();
             }
 
+            // Add Select / Projection
             const options = {};
             if (queryData.select && queryData.select.length > 0) {
                 options.projection = {};
@@ -216,6 +217,9 @@ class MongoDBDriver extends BaseDriver {
 
                     resolve(true);
                 });
+            } else if (type === "aggregate") {
+                const data = await this.dbo.collection(queryData.table).aggregate(queryData.aggregate).toArray();
+                resolve(data && data.length > 0 ? data : null);
             } else {
                 this.dbo
                     .collection(queryData.table)
