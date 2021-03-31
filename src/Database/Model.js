@@ -122,13 +122,16 @@ class Model {
         return builder;
     }
 
-    static async aggregate(settings) {
+    static async aggregate(settings, skipModelMapping) {
         const model = new this();
         const builder = new QueryBuilder(model.connection);
-        builder.setModelMapping(model);
+        if (!skipModelMapping) {
+            builder.setModelMapping(model);
+        }
+
         builder.table(model.table);
 
-        return await builder.aggregate(settings);
+        return await builder.aggregate(settings, skipModelMapping);
     }
 
     async getConnection() {
