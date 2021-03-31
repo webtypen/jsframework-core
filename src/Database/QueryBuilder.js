@@ -161,7 +161,7 @@ class QueryBuilder {
         return data;
     }
 
-    async aggregate(settings) {
+    async aggregate(settings, skipModelMapping) {
         let data = null;
 
         try {
@@ -173,7 +173,11 @@ class QueryBuilder {
             throw new Error(e);
         }
 
-        return data && data.length > 0 ? data.map((el) => this.handleModelMapping(el)) : null;
+        return data && data.length > 0
+            ? skipModelMapping
+                ? data
+                : data.map((el) => this.handleModelMapping(el))
+            : null;
     }
 
     handleModelMapping(element) {
