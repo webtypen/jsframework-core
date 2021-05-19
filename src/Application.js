@@ -3,7 +3,7 @@ const express = require("express");
 const fileupload = require("express-fileupload");
 const Connections = require("./Database/Connections");
 const Config = require("./Config");
-const Logger = require("./Logger");
+const Validator = require("./Validator");
 var app = express();
 
 exports.boot = () => {
@@ -26,6 +26,25 @@ exports.boot = () => {
             res.header("Access-Control-Allow-Methods", "*");
             res.header("Access-Control-Allow-Headers", "*");
             res.header("x-powered-by", "webtpyen-jsframework");
+
+            req.validationFails = (rules, options) => {
+                const fails = Validator.fails(req.body, rules, options);
+                if (fails && Object.keys(fails).length > 0) {
+                    res.statusCode = 500;
+                    res.send({
+                        status: options && options.errorStatus ? options.errorStatus : "error",
+                        message:
+                            options && options.errorMessage
+                                ? options.errorMessage
+                                : "There was an error processing the request.",
+                        errors: fails,
+                    });
+                    res.end();
+                    return true;
+                }
+
+                return false;
+            };
             next();
         });
 

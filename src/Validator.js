@@ -1,20 +1,25 @@
+const lodash = require("lodash");
+
 const validatorRules = {
-    required: (field, object, args, options) => {
+    required: (field, value, object, args, options) => {
         const fieldName = options && options.names && options.names[field] ? options.names[field] : field;
-        return object[field] === undefined || object[field] === null || object[field].toString().trim() === ""
+        return value === undefined || value === null || value.toString().trim() === ""
             ? "Das Feld `" + fieldName + "` muss ausgefüllt werden"
             : null;
     },
-    email: (field, object, args, options) => {
-        const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    email: (field, value, object, args, options) => {
+        const emailRegexp =
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
-        if (!emailRegexp.test(object[field])) {
+        if (!emailRegexp.test(value)) {
             const fieldName = options && options.names && options.names[field] ? options.names[field] : field;
             return "Das Feld `" + fieldName + "` muss eine gültige E-Mail Adresse beinhalten";
         }
         return null;
     },
-    equals: (field, object, args, options) => {
+    equals: (field, value, object, args, options) => {
+        // @ToDo: element.test -> Dot-Notation mit lodash erlauben
+
         if (object[field] !== object[args[1]]) {
             const fieldName = options && options.names && options.names[field] ? options.names[field] : field;
             const fieldName2 = options && options.names && options.names[args[1]] ? options.names[args[1]] : field;
@@ -36,12 +41,14 @@ exports.fails = (object, rules, options) => {
 };
 
 exports.valueFails = (field, ruleString, object, options) => {
+    const value = lodash.get(object, field);
+
     let fails = [];
     const rules = ruleString.split("|");
     if (rules && rules.length > 0) {
         for (let i in rules) {
             const args = rules[i].split(":");
-            const check = validatorRules[args[0]](field, object, args, options);
+            const check = validatorRules[args[0]](field, value, object, args, options);
             if (check && check.trim() !== "") {
                 fails.push(check);
             }
