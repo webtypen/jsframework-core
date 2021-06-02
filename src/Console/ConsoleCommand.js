@@ -20,6 +20,20 @@ class ConsoleCommand {
         return this.args;
     }
 
+    getOption(option) {
+        const argv = process.argv;
+
+        for (let i in argv) {
+            if (argv[i].indexOf("--" + option + "=") !== 0) {
+                continue;
+            }
+
+            return argv[i].replace("--" + option + "=", "");
+        }
+
+        return null;
+    }
+
     writeln(line) {
         return this.output.writeln(line);
     }
