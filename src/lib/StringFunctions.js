@@ -3,6 +3,7 @@ exports.slug = (string) => {
     string = string.replace(new RegExp("  ", "g"), " ");
     string = string.replace(new RegExp("  ", "g"), " ");
     string = string.replace(new RegExp(" ", "g"), "-");
+    string = string.replace(new RegExp("_", "g"), "-");
 
     const replacements = {
         Ä: "AE",
@@ -22,7 +23,7 @@ exports.slug = (string) => {
         string = string.replace(new RegExp(i, "g"), replacements[i]);
     }
 
-    return string.trim();
+    return string.replace(/[^a-zA-Z\- ]/g, "").trim();
 };
 
 exports.random = (length) => {
@@ -33,4 +34,3 @@ exports.random = (length) => {
     }
     return result.join("");
 };
-
