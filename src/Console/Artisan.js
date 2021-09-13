@@ -64,7 +64,11 @@ if (!argv || !argv[0] || argv[0].trim() === "" || argv[0].trim().substring(0, 1)
     instance.setArguments(argv.slice(1));
 
     (async () => {
-        await instance.handle();
+        try {
+            await instance.handle();
+        } catch(e) {
+            console.error(e);
+        }
 
         // Close all
         Application.close("console");
