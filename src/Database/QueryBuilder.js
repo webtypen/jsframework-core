@@ -1,7 +1,6 @@
 "use strict";
 const Config = require("../Config");
 const Connections = require("./Connections");
-const moment = require("moment");
 
 class QueryBuilder {
     connection = null;
@@ -199,7 +198,7 @@ class QueryBuilder {
                     typeof clone.casts[i] === "function"
                         ? clone.casts[i](element[i])
                         : clone.casts[i] === "datetime"
-                        ? moment(element[i])
+                        ? new Date(element[i])
                         : element[i];
             } else {
                 clone[i] = element[i];
