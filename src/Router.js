@@ -41,16 +41,14 @@ exports.route = (method, path, component, options) => {
     }
 
     const componentMethod = async (req, res, next) => {
-        return Promise.resolve(component(req, res, next)).catch((e) => {
-            console.error(e);
+        try {
+            return Promise.resolve(component(req, res, next)).catch((e) => {
+                res.header("Access-Control-Allow-Origin", "*");
+                res.header("Access-Control-Allow-Methods", "*");
+                res.header("Access-Control-Allow-Headers", "*");
+                res.header("x-powered-by", "webtpyen-jsframework");
 
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow-Methods", "*");
-            res.header("Access-Control-Allow-Headers", "*");
-            res.header("x-powered-by", "webtpyen-jsframework");
-
-            if (env("APP_DEBUG") && env("APP_DEBUG").toString().trim() === "true") {
-                if (e) {
+                if (env("APP_DEBUG") && env("APP_DEBUG").toString().trim() === "true" && e) {
                     for (let i in e) {
                         console.log(i, e);
                     }
@@ -60,17 +58,41 @@ exports.route = (method, path, component, options) => {
                         message: e.toString(),
                         error: e.stack,
                     });
+                } else {
+                    res.status(500).send({
+                        status: "error",
+                        message:
+                            env("APP_ERROR500") && env("APP_ERROR500").toString().trim() !== ""
+                                ? env("APP_ERROR500")
+                                : "Internal Server Error",
+                    });
                 }
+
+                throw e;
+            });
+        } catch (e) {
+            if (env("APP_DEBUG") && env("APP_DEBUG").toString().trim() === "true" && e) {
+                for (let i in e) {
+                    console.log(i, e);
+                }
+
+                res.status(500).send({
+                    status: "error",
+                    message: e.toString(),
+                    error: e.stack,
+                });
+            } else {
+                res.status(500).send({
+                    status: "error",
+                    message:
+                        env("APP_ERROR500") && env("APP_ERROR500").toString().trim() !== ""
+                            ? env("APP_ERROR500")
+                            : "Internal Server Error",
+                });
             }
 
-            res.status(500).send({
-                status: "error",
-                message:
-                    env("APP_ERROR500") && env("APP_ERROR500").toString().trim() !== ""
-                        ? env("APP_ERROR500")
-                        : "Internal Server Error",
-            });
-        });
+            throw e;
+        }
     };
 
     if (method === "get") {
