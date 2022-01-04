@@ -6,10 +6,15 @@ const Config = require("./Config");
 const Validator = require("./Validator");
 var app = express();
 
-exports.boot = () => {
+exports.boot = (options) => {
     try {
         // Load env-variables
         require("dotenv").config();
+
+        // beforeBoot()
+        if (options && options.beforeBoot) {
+            options.beforeBoot(app);
+        }
 
         // Load global functions
         require("./lib/functions");
@@ -67,6 +72,11 @@ exports.boot = () => {
         // Load routes
         require("../../../../routes");
 
+        // beforeListen()
+        if (options && options.beforeListen) {
+            options.beforeListen(app);
+        }
+
         // Start express-app
         const port = Config.get("app.port");
         if (process.env.APP_RUNS_LOCAL && process.env.APP_RUNS_LOCAL === "true") {
@@ -75,6 +85,7 @@ exports.boot = () => {
             });
         }
     } catch (e) {
+        console.log("ERROR");
         console.error(e);
     }
     return app;
