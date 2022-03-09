@@ -13,6 +13,7 @@ const UsersAddRole = require("./Commands/UsersAddRole");
 const UsersRemoveRole = require("./Commands/UsersRemoveRole");
 const Application = require("../Application");
 const CompileCommand = require("./Commands/CompileCommand");
+const RoutesListCommand = require("./Commands/RoutesListCommand");
 
 // Load env-Variables
 require("dotenv").config();
@@ -33,6 +34,7 @@ ConsoleRegistry.register(UsersDeactivate);
 ConsoleRegistry.register(UsersAddRole);
 ConsoleRegistry.register(UsersRemoveRole);
 ConsoleRegistry.register(CompileCommand);
+ConsoleRegistry.register(RoutesListCommand);
 
 // Load Commands
 const commandFiles = glob.sync("./app/Commands/**/*.js");
