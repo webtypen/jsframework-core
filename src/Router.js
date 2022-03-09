@@ -106,6 +106,14 @@ exports.route = (method, path, component, options) => {
     } else if (method === "any") {
         Application.app().all(path, componentMethod);
     }
+    
+    if (process.env.FRAMEWORK_TRACK_ROUTES) {
+        if (!process.FRAMEWORK_ROUTES) {
+            process.FRAMEWORK_ROUTES = [];
+        }
+
+        process.FRAMEWORK_ROUTES.push({ method: method, path: path, middleware: options && options.middleware ? options.middleware : null });
+    }
 };
 
 exports.get = (path, component, options) => {
