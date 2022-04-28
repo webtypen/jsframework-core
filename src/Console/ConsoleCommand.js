@@ -25,6 +25,9 @@ class ConsoleCommand {
 
         for (let i in argv) {
             if (argv[i].indexOf("--" + option + "=") !== 0) {
+                if (argv[i].indexOf("--" + option) === 0) {
+                    return true;
+                }
                 continue;
             }
 
