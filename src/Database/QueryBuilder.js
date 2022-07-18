@@ -160,11 +160,27 @@ class QueryBuilder {
         return data;
     }
 
-    async aggregate(settings, skipModelMapping) {
+    async aggregate(settings, optionsOrSkipModelMapping) {
         let data = null;
+
+        const skipModelMapping = optionsOrSkipModelMapping
+            ? (typeof optionsOrSkipModelMapping === "object" && optionsOrSkipModelMapping.skipModelMapping === true) ||
+              optionsOrSkipModelMapping === true
+                ? true
+                : false
+            : false;
 
         try {
             this.queryData.aggregate = settings;
+
+            if (optionsOrSkipModelMapping && typeof optionsOrSkipModelMapping === "object") {
+                if (optionsOrSkipModelMapping.skipModelMapping !== undefined) {
+                    delete optionsOrSkipModelMapping.skipModelMapping;
+                }
+
+                this.queryData.aggregationOptions = optionsOrSkipModelMapping;
+            }
+
             const connection = await Connections.getConnection(this.connection);
             data = await connection.queryBuilder("aggregate", this.queryData);
         } catch (e) {
