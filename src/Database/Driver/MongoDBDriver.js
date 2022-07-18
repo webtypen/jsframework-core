@@ -218,7 +218,10 @@ class MongoDBDriver extends BaseDriver {
                     resolve(true);
                 });
             } else if (type === "aggregate") {
-                const data = await this.dbo.collection(queryData.table).aggregate(queryData.aggregate).toArray();
+                const data = await this.dbo
+                    .collection(queryData.table)
+                    .aggregate(queryData.aggregate, queryData.aggregationOptions)
+                    .toArray();
                 resolve(data && data.length > 0 ? data : null);
             } else {
                 this.dbo
