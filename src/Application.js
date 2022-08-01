@@ -25,6 +25,18 @@ exports.boot = (options) => {
         // Auth laden
         require("./Auth/AuthInit")(app);
 
+        // File-Upload
+        if (!Config.get("app.fileupload.disabled")) {
+            const filesize = Config.get("app.fileupload.filesize");
+
+            app.use(fileupload({
+                createParentPath: true,
+                limits: { 
+                    fileSize: filesize ? filesize : 2 * 1024 * 1024 * 1024 // 2 MB max file(s) size
+                },
+            }));
+        }
+        
         // Middleware
         app.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*");
