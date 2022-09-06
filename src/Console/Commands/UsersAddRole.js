@@ -20,7 +20,7 @@ class UsersAddRole extends ConsoleCommand {
             }
         }
 
-        const roles = user.roles && user.roles.trim() !== "" ? JSON.parse(user.roles) : null;
+        const roles = typeof user.roles !== "object" ? user.roles && user.roles.trim() !== "" ? JSON.parse(user.roles) : null : user.roles;
         if (roles && roles.length > 0) {
             this.writeln("Current roles (" + user.email + "):");
             roles.forEach((role) => this.writeln("   " + role));
